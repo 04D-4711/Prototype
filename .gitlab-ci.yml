@@ -1,7 +1,6 @@
 stages:
   - comp3900-video
   - comp3900-checks
-  - comp3900-build
 
 variables:
   ASSIGNMENT_DOCUMENT_NAME: 'project-documentation'
@@ -130,8 +129,11 @@ check_video_resolution:
         # Count words in markdown file, excluding:
         # 1. YAML frontmatter if present
         # 2. Code blocks (content between triple backticks)
-        # 3. Content after "## References"
-        # 4. characters that aren't alphabetic or whitespace
+        # 3. HTML comments, including the prompts left in the template
+        # 4. Content from "## Acknowledgements" or "## References" onwards
+        # 5. Image paths and link URLs (the caption/link TEXT is still counted)
+        # 6. numbers and any other characters that aren't alphabetic or whitespace
+        # Note: image captions and table text ARE counted, by design.
         word_count=$(
           awk '
             NR == 1 && $0 == "---" { in_front = 1; next }
@@ -144,7 +146,31 @@ check_video_resolution:
             /^```/ { in_code_block = !in_code_block; next }
             !in_code_block { print }
           ' |
-          sed '/^## References/,$d' |
+          awk '
+            BEGIN { inc = 0 }
+            {
+              out = ""; line = $0
+              while (length(line) > 0) {
+                if (inc) {
+                  p = index(line, "-->")
+                  if (p == 0) { line = "" } else { line = substr(line, p + 3); inc = 0 }
+                } else {
+                  p = index(line, "<!--")
+                  if (p == 0) { out = out line; line = "" }
+                  else { out = out substr(line, 1, p - 1); line = substr(line, p + 4); inc = 1 }
+                }
+              }
+              print out
+            }
+          ' |
+          awk '
+            {
+              h = tolower($0)
+              if (h ~ /^##+ *acknowledge?ments?/ || h ~ /^##+ *references/) stop = 1
+              if (!stop) print
+            }
+          ' |
+          sed -e 's/!\[\([^]]*\)\]([^)]*)/\1/g' -e 's/\[\([^]]*\)\]([^)]*)/\1/g' |
           sed 's/[^[:alpha:][:space:]]//g' |
           wc -w)
 
@@ -220,42 +246,3 @@ check_markdown:
       - '$ASSIGNMENT_DOCUMENT_NAME.md'
   allow_failure: false
 
-build_pdf:
-  stage: comp3900-build
-  image:
-    name: charlepm/pandoc-latex-libertine:0.3.0
-    entrypoint: ["/bin/sh", "-c"]
-  tags:
-    - comp4350
-  variables:
-    INPUT_MARKDOWN: '$ASSIGNMENT_DOCUMENT_NAME.md'
-    OUTPUT_PDF: '$CI_PROJECT_NAME-$CI_PROJECT_ROOT_NAMESPACE-$ASSIGNMENT_DOCUMENT_NAME.pdf'
-  script:
-    - |
-      cp */*.png . || true
-    - |
-      cp */*.PNG . || true
-    - |
-      cp */*.jpg . || true
-    - |
-      cp */*.JPG . || true
-    - |
-      cp */*.jpeg . || true
-    - |
-      cp */*.JPEG . || true
-    - |
-      pandoc \
-      --standalone \
-      --embed-resources \
-      --metadata date="$(date '+%Y-%m-%d')" \
-      --output=$OUTPUT_PDF \
-      -V 'geometry: left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm' \
-      -V 'papersize: a4' \
-      -V 'pagestyle:headings' \
-      -V 'fontfamily:libertine,sourcecodepro' \
-      -V 'fontsize:11pt' \
-      $INPUT_MARKDOWN
-  artifacts:
-    paths:
-      - $OUTPUT_PDF
-  allow_failure: true
