@@ -26,7 +26,7 @@ If you're a student in this class, there are a few things you need to do to get 
 
 5. Record your presentation and upload it as `project-presentation.mp4` in the top level of your fork. The video must be in `.mp4` format (h.264 or h.265 encoding), no larger than 1920x1080 pixels, and no longer than 330 seconds (5 minutes + 10% buffer). Your presentation video is the primary document for marking purposes.
 
-6. Don't forget to include at least five references to external sources in ACM format in your documentation.
+6. Don't forget to include at least five references to external sources in your documentation: a numbered Markdown list in ACM reference format, each entry ending with a working DOI or URL, and each cited in your text by number, e.g. `[1]`. The References section of `project-documentation.md` has the full rules and example entries.
 
 7. commit and **push** your changes to GitLab
 

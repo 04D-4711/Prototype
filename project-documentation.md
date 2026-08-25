@@ -39,4 +39,29 @@ for more information about markdown syntax, see https://www.markdownguide.org
 
 ## References
 
-<!-- make sure to add at least five external references in ACM format. Note that serious errors in referencing including fake or incorrect references comes under the N category in the marking rubric and can be a breach of academic integrity. -->
+<!--
+List at least five external references here, and cite each one in your text above.
+
+Format rules:
+
+1. Write your references as a numbered Markdown list: each entry starts with `1.`, `2.`, ...
+   (Don't write `[1]` by hand at the start of a line: `[1]: ...` is Markdown link-definition
+   syntax and the line will disappear from the rendered page.)
+2. Cite in your text with the number in square brackets, e.g. "dogs are dichromats [2]".
+   Keep the list order matched to your in-text numbers.
+3. End every reference with a working link:
+   - published work ends with its DOI as a URL, e.g. <https://doi.org/10.1145/1978822.1978836>
+   - web sources end with: Retrieved Month Day, Year from <URL>
+4. The rest of the entry follows ACM reference format: full author first names, year, title,
+   venue, pages. See <https://www.acm.org/publications/authors/reference-formatting>.
+   Tip: on the ACM Digital Library, "Export Citation -> ACM Ref" gives you this format exactly.
+
+Example entries (replace these with your own):
+
+1. Clara Mancini. 2011. Animal-computer interaction (ACI): a manifesto. *Interactions* 18, 4 (2011), 69-73. <https://doi.org/10.1145/1978822.1978836>
+2. Allan MacLean, Richard M. Young, and Thomas P. Moran. 1989. Design rationale: the argument behind the artifact. *ACM SIGCHI Bulletin* 20, SI (1989), 247-252. <https://doi.org/10.1145/67450.67497>
+3. Matt Cone. 2023. Markdown Guide. Retrieved August 25, 2026 from <https://www.markdownguide.org>
+
+Note: fake, unresolvable, or mismatched references come under the N category in the marking
+rubric and can be a breach of academic integrity.
+-->
