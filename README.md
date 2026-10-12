@@ -8,7 +8,7 @@ If you're a student in this class, there are a few things you need to do to get 
 
 ## To start
 
-1. fork this project to your own "uid" [GitLab](https://gitlab.cecs.anu.edu.au/) account
+1. fork this project to your own "uid" [GitLab](https://gitlab.comp.anu.edu.au/) account
 
 2. when you fork it, make sure that you don't change the name
 
