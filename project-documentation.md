@@ -10,6 +10,8 @@ This text may be a transcript of your spoken presentation with references and im
 Note that your presentation video (project-presentation.mp4) is the primary document for marking purposes.
 Please delete commented text in this document before the submission deadline.
 
+Keep the headings below as they are: they map directly to the marking criteria. You can shorten them on your slides and add sub-headings (###) underneath.
+
 to include an image, use this syntax:
 
 ![Caption for your image](materials/your-image.jpg)
@@ -31,11 +33,28 @@ for more information about markdown syntax, see https://www.markdownguide.org
 
 ## Positionality Statement (COMP6390 only)
 
-<!-- COMP6390 (postgraduate) students only: critically reflect on your presence and influence within the technology design process in a statement of positionality. This statement must reflect on your experiences and background and how this manifests in the design and research process. COMP3900 (undergraduate) students should not complete this section and should delete it, including this heading. -->
+<!-- COMP6390 (postgraduate) students only: critically reflect on your presence and influence within the technology design process in a statement of positionality. This statement must reflect on your experiences and background and how this manifests in the design and research process. Your positionality statement must also be in your presentation video: if it is missing from the video, it scores zero. COMP3900 (undergraduate) students should not complete this section and should delete it, including this heading. -->
+
+## Participants
+
+<!--
+List your research participants here as a bullet list, one participant per line, in exactly this format (uid, then first name, then last name):
+
+- u1234567 Firstname Lastname
+
+Rules (these are checked automatically by CI, and cross-checked against every other submission in the class):
+
+1. 3 to 5 participants
+2. every participant must be a current COMP3900/6390 student
+3. use each participant's real ANU uid and name (ask them to write it down for you as part of your consent process)
+4. don't list yourself, and don't list anyone twice
+
+Listing people who did not actually participate in your study is fabrication of research data, which comes under the N category in the marking rubric and can be a breach of academic integrity.
+-->
 
 ## Acknowledgements
 
-<!-- List your research participants here: all participants must be current COMP3900/6390 students. Put any acknowledgement of external help or use of generative AI here as well. You can cite the specific tools and provide a reference in the reference section below. Use of generative AI without appropriate explanation and referencing comes under the N category in the marking rubric and can be a breach of academic integrity. -->
+<!-- Put any acknowledgement of external help or use of generative AI here as well. You can cite the specific tools and provide a reference in the reference section below. Use of generative AI without appropriate explanation and referencing comes under the N category in the marking rubric and can be a breach of academic integrity. -->
 
 ## References
 

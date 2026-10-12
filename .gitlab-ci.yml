@@ -6,6 +6,8 @@ variables:
   ASSIGNMENT_DOCUMENT_NAME: 'project-documentation'
   ASSIGNMENT_MIN_WORDS: 400
   ASSIGNMENT_MAX_WORDS: 1980
+  ASSIGNMENT_MIN_PARTICIPANTS: 3
+  ASSIGNMENT_MAX_PARTICIPANTS: 5
   ASSIGNMENT_VIDEO_NAME: 'project-presentation'
   ASSIGNMENT_VIDEO_MIN_DURATION: 30  # in seconds
   ASSIGNMENT_VIDEO_MAX_DURATION: 330  # in seconds (5 minutes + 10% buffer)
@@ -130,7 +132,7 @@ check_video_resolution:
         # 1. YAML frontmatter if present
         # 2. Code blocks (content between triple backticks)
         # 3. HTML comments, including the prompts left in the template
-        # 4. Content from "## Acknowledgements" or "## References" onwards
+        # 4. Content from "## Participants", "## Acknowledgements" or "## References" onwards
         # 5. Image paths and link URLs (the caption/link TEXT is still counted)
         # 6. numbers and any other characters that aren't alphabetic or whitespace
         # Note: image captions and table text ARE counted, by design.
@@ -166,7 +168,7 @@ check_video_resolution:
           awk '
             {
               h = tolower($0)
-              if (h ~ /^##+ *acknowledge?ments?/ || h ~ /^##+ *references/) stop = 1
+              if (h ~ /^##+ *participants/ || h ~ /^##+ *acknowledge?ments?/ || h ~ /^##+ *references/) stop = 1
               if (!stop) print
             }
           ' |
@@ -195,6 +197,7 @@ check_video_resolution:
 
 check_word_count:
   stage: comp3900-checks
+  needs: []  # run without waiting for the video checks
   tags:
     - comp4350
   <<: *word_count
@@ -204,6 +207,7 @@ check_word_count:
 
 check_markdown:
   stage: comp3900-checks
+  needs: []  # run without waiting for the video checks
   tags:
     - comp4350
   image: node:22-alpine
@@ -246,3 +250,121 @@ check_markdown:
       - '$ASSIGNMENT_DOCUMENT_NAME.md'
   allow_failure: false
 
+check_participants:
+  stage: comp3900-checks
+  needs: []  # run without waiting for the video checks
+  tags:
+    - comp4350
+  image: alpine:3.21.2
+  before_script:
+    - |
+      cat > /tmp/check_participants.sh << 'EOF'
+      #!/bin/sh
+      # Participants section checker
+      # Usage: ./check_participants.sh <min_participants> <max_participants> <file>
+      #
+      # Validates the '## Participants' section: it must contain only a bullet
+      # list of 3-5 entries in the exact format '- u1234567 Firstname Lastname',
+      # with no duplicates and without the author's own uid. Enrolment of the
+      # listed uids is checked separately by the course staff after cloning.
+
+      min_participants=$1
+      max_participants=$2
+      file=$3
+      status=0
+
+      if [ ! -f "$file" ]; then
+        echo "Error: File $file not found"
+        exit 1
+      fi
+
+      # Extract the '## Participants' section (up to the next heading). Fails
+      # if the heading is missing entirely.
+      awk '
+        /^#/ {
+          h = tolower($0)
+          if (h ~ /^##+ *participants/) { insec = 1; found = 1; next }
+          insec = 0
+        }
+        insec { print }
+        END { exit found ? 0 : 1 }
+      ' "$file" > /tmp/participants_raw.txt || {
+        echo "❌ Error: no '## Participants' section found in $file"
+        echo "Add the '## Participants' heading back (see the template) and list your participants under it."
+        exit 1
+      }
+
+      # Strip HTML comments (so the template's example entry and instructions
+      # aren't counted), then drop blank lines.
+      awk '
+        {
+          out = ""; line = $0
+          while (length(line) > 0) {
+            if (inc) {
+              p = index(line, "-->")
+              if (p == 0) { line = "" } else { line = substr(line, p + 3); inc = 0 }
+            } else {
+              p = index(line, "<!--")
+              if (p == 0) { out = out line; line = "" }
+              else { out = out substr(line, 1, p - 1); line = substr(line, p + 4); inc = 1 }
+            }
+          }
+          print out
+        }
+      ' /tmp/participants_raw.txt | sed 's/[[:space:]]*$//' | grep -v '^[[:space:]]*$' > /tmp/participants.txt || true
+
+      if [ ! -s /tmp/participants.txt ]; then
+        echo "❌ Error: the '## Participants' section is empty."
+        echo "List your participants, one per line, exactly like: - u1234567 Firstname Lastname"
+        exit 1
+      fi
+
+      echo "Found participant section contents:"
+      cat /tmp/participants.txt
+      echo ""
+
+      # Every (non-comment, non-blank) line must be a list entry in the
+      # required format: '- ', a uid, then at least a first and last name.
+      bad_lines=$(grep -vE '^- u[0-9]{7} [^[:space:]]+( [^[:space:]]+)+$' /tmp/participants.txt || true)
+      if [ -n "$bad_lines" ]; then
+        echo "❌ Error: these lines don't match the required format '- u1234567 Firstname Lastname':"
+        printf '%s\n' "$bad_lines"
+        status=1
+      fi
+
+      grep -oE '^- u[0-9]{7}' /tmp/participants.txt | cut -c3- > /tmp/participant_uids.txt || true
+      count=$(wc -l < /tmp/participant_uids.txt | tr -d '[:space:]')
+
+      if [ "$count" -lt "$min_participants" ] || [ "$count" -gt "$max_participants" ]; then
+        echo "❌ Error: found $count correctly formatted participant entries; you need between $min_participants and $max_participants."
+        status=1
+      fi
+
+      duplicate_uids=$(sort /tmp/participant_uids.txt | uniq -d)
+      if [ -n "$duplicate_uids" ]; then
+        echo "❌ Error: these uids are listed more than once:"
+        printf '%s\n' "$duplicate_uids"
+        status=1
+      fi
+
+      if grep -qx 'u1234567' /tmp/participant_uids.txt; then
+        echo "❌ Error: u1234567 is the example uid from the template — replace it with your real participants."
+        status=1
+      fi
+
+      author_uid=$(sed -n 's/^author:[[:space:]]*//p' "$file" | head -n 1 | tr -d '[:space:]')
+      if [ -n "$author_uid" ] && grep -qx "$author_uid" /tmp/participant_uids.txt; then
+        echo "❌ Error: your own uid ($author_uid) is in the participant list — you can't be a participant in your own study."
+        status=1
+      fi
+
+      if [ "$status" -eq 0 ]; then
+        echo "✅ Success: $count participants listed in the correct format."
+        echo "Note: after the deadline, uids and names are verified against the class list and cross-checked against every other submission."
+      fi
+      exit $status
+      EOF
+    - chmod +x /tmp/check_participants.sh
+  script:
+    - /tmp/check_participants.sh $ASSIGNMENT_MIN_PARTICIPANTS $ASSIGNMENT_MAX_PARTICIPANTS $ASSIGNMENT_DOCUMENT_NAME.md
+  allow_failure: false
