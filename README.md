@@ -47,7 +47,7 @@ The short version is:
 - **GitLab:** have a look at this page <https://comp.anu.edu.au/docs/gitlab/>
 - **Markdown:** read this website <https://www.markdownguide.org>
 
-**Markdown Formatting Check:** There is a CI/CD job that checks your markdown formatting using the [`markdownlint-cli`](https://github.com/igorshubovych/markdownlint-cli) tool. Syntax rules are listed in the [markdownlint rules documentation](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md); in our script, rules `MD013` and `MD041` are disabled. All other rules are active.
+**Markdown Formatting Check:** There is a CI/CD job that checks your markdown formatting using the [`markdownlint-cli`](https://github.com/igorshubovych/markdownlint-cli) tool. Syntax rules are listed in the [markdownlint rules documentation](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md); in our script, rules `MD004` (so you can mix `*` and `-` list markers), `MD013` and `MD041` are disabled. All other rules are active.
 
 ## Getting help
 
