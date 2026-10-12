@@ -38,20 +38,25 @@ _Note_: you can push as many times as you like and all versions are backed up on
 
 ## Exporting and compressing your video
 
-Your `project-presentation.mp4` (and any recordings in `materials`) must be under 100MB so it can be pushed normally. Please do not use Git LFS. Git keeps every version you commit, so a file that is too large stays in your repository even after you replace it with a smaller one: compress and check the size **before** you `git add` it.
+Your `project-presentation.mp4` (and any recordings in `materials`) must be under 100MB so it can be pushed normally. Please do not use Git LFS. Git keeps every version you commit, so a file that is too large stays in your repository even after you replace it with a smaller one: check the size **before** you `git add` it.
 
-1. **Export from PowerPoint at Full HD (1080p)**: File → Export → Create a Video → Full HD (1080p). Don't choose Ultra HD (4K), which is larger than the 1920x1080 limit.
+1. **Export from PowerPoint at Full HD (1080p)**: File → Export → Create a Video → Full HD (1080p). Don't choose Ultra HD (4K), which is larger than the 1920x1080 limit. Name the file `project-presentation.mp4`.
 
-2. **Re-encode to H.264 at 2000 kbps with 128 kbps AAC audio.** This gives about 88MB for a 330-second video and still looks sharp for slides and your face. Use either:
+2. **Check the file size**: Get Info (macOS), Properties (Windows), or `ls -lh project-presentation.mp4`.
+
+    - **Under 100MB:** you're done. Commit and push it as it is.
+    - **100MB or more:** re-encode it with the settings in step 3 before you commit it.
+
+3. **Only if your video is 100MB or more, re-encode it to H.264 at 2000 kbps with 128 kbps AAC audio.** These settings give about 88MB for a 330-second video and still look sharp for slides and your face. Use either:
 
     - [HandBrake](https://handbrake.fr) (free, with a graphical interface): open your exported video, choose the **Fast 1080p30** preset, then on the **Video** tab select **Avg Bitrate (kbps)**, enter `2000`, and tick **Multi-Pass Encoding**. Save the output as `project-presentation.mp4`.
-    - [ffmpeg](https://ffmpeg.org) (command line):
+    - [ffmpeg](https://ffmpeg.org) (command line), after renaming your PowerPoint export to `exported-video.mp4`:
 
         ```sh
         ffmpeg -i exported-video.mp4 -c:v libx264 -preset slow -b:v 2000k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart project-presentation.mp4
         ```
 
-3. **Check the file size** before you commit: Get Info (macOS), Properties (Windows), or `ls -lh project-presentation.mp4`. It should be under 100MB. Watch it through once to make sure the audio and video are fine.
+    Check the size of the new file again, and watch it through once to make sure the audio and video are fine.
 
 ## Help with GitLab and Markdown
 
