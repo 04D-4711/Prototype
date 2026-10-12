@@ -26,9 +26,7 @@ If you're a student in this class, there are a few things you need to do to get 
 
 5. Write your project documentation in `project-documentation.md` following the headings provided in the template. Use proper markdown syntax to format your document and display images.
 
-6. Record your presentation and upload it as `project-presentation.mp4` in the top level of your fork. The video must be in `.mp4` format (h.264 or h.265 encoding), no larger than 1920x1080 pixels, and no longer than 330 seconds (5 minutes + 10% buffer). Your presentation video is the primary document for marking purposes.
-
-    **Tip: keep the video file under 100MB** (this also applies to any recordings in `materials`), which is fine for a regular git push. Please do not use Git LFS. If your video is larger, compress it (for example, export at a lower resolution or quality setting) **before you commit it**, since git keeps earlier versions and committing a smaller file later won't shrink your repository.
+6. Record your presentation and upload it as `project-presentation.mp4` in the top level of your fork. The video must be in `.mp4` format (h.264 or h.265 encoding), no larger than 1920x1080 pixels, and no longer than 330 seconds (5 minutes + 10% buffer). Your presentation video is the primary document for marking purposes. The video file must be **under 100MB**: see [Exporting and compressing your video](#exporting-and-compressing-your-video) below **before you commit it**.
 
 7. Don't forget to include at least five references to external sources in your documentation: a numbered Markdown list in ACM reference format, each entry ending with a working DOI or URL, and each cited in your text by number, e.g. `[1]`. The References section of `project-documentation.md` has the full rules and example entries.
 
@@ -37,6 +35,23 @@ If you're a student in this class, there are a few things you need to do to get 
 9. wait for the CI/CD jobs to complete (click "Build" and then "Jobs" in the left sidebar), you should see all green ticks. The video check jobs will tell you if your presentation video is missing, too long, or too large. The word count, markdown, and participants checks run even if you haven't uploaded your video yet.
 
 _Note_: you can push as many times as you like and all versions are backed up on GitLab with the time and date that you pushed it. Push early and push often.
+
+## Exporting and compressing your video
+
+Your `project-presentation.mp4` (and any recordings in `materials`) must be under 100MB so it can be pushed normally. Please do not use Git LFS. Git keeps every version you commit, so a file that is too large stays in your repository even after you replace it with a smaller one: compress and check the size **before** you `git add` it.
+
+1. **Export from PowerPoint at Full HD (1080p)**: File → Export → Create a Video → Full HD (1080p). Don't choose Ultra HD (4K), which is larger than the 1920x1080 limit.
+
+2. **Re-encode to H.264 at 2000 kbps with 128 kbps AAC audio.** This gives about 88MB for a 330-second video and still looks sharp for slides and your face. Use either:
+
+    - [HandBrake](https://handbrake.fr) (free, with a graphical interface): open your exported video, choose the **Fast 1080p30** preset, then on the **Video** tab select **Avg Bitrate (kbps)**, enter `2000`, and tick **Multi-Pass Encoding**. Save the output as `project-presentation.mp4`.
+    - [ffmpeg](https://ffmpeg.org) (command line):
+
+        ```sh
+        ffmpeg -i exported-video.mp4 -c:v libx264 -preset slow -b:v 2000k -maxrate 2500k -bufsize 5000k -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart project-presentation.mp4
+        ```
+
+3. **Check the file size** before you commit: Get Info (macOS), Properties (Windows), or `ls -lh project-presentation.mp4`. It should be under 100MB. Watch it through once to make sure the audio and video are fine.
 
 ## Help with GitLab and Markdown
 

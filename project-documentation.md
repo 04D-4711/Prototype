@@ -66,10 +66,10 @@ Format rules:
 1. Write your references as a numbered Markdown list: each entry starts with `1.`, `2.`, ...
    (Don't write `[1]` by hand at the start of a line: `[1]: ...` is Markdown link-definition
    syntax and the line will disappear from the rendered page.)
-2. Cite in your text with the number in square brackets, e.g. "dogs are dichromats [2]".
+2. Cite in your text with the number in square brackets, e.g. "daily eco-feedback beats a monthly bill [1]".
    Keep the list order matched to your in-text numbers.
 3. End every reference with a working link:
-   - published work ends with its DOI as a URL, e.g. <https://doi.org/10.1145/1978822.1978836>
+   - published work ends with its DOI as a URL, e.g. <https://doi.org/10.1145/1753326.1753629>
    - web sources end with: Retrieved Month Day, Year from <URL>
 4. The rest of the entry follows ACM reference format: full author first names, year, title,
    venue, pages. See <https://www.acm.org/publications/authors/reference-formatting>.
@@ -77,7 +77,7 @@ Format rules:
 
 Example entries (replace these with your own):
 
-1. Clara Mancini. 2011. Animal-computer interaction (ACI): a manifesto. *Interactions* 18, 4 (2011), 69-73. <https://doi.org/10.1145/1978822.1978836>
+1. Jon Froehlich, Leah Findlater, and James Landay. 2010. The design of eco-feedback technology. In *Proceedings of the SIGCHI Conference on Human Factors in Computing Systems* (CHI '10), 1999-2008. <https://doi.org/10.1145/1753326.1753629>
 2. Allan MacLean, Richard M. Young, and Thomas P. Moran. 1989. Design rationale: the argument behind the artifact. *ACM SIGCHI Bulletin* 20, SI (1989), 247-252. <https://doi.org/10.1145/67450.67497>
 3. Matt Cone. 2023. Markdown Guide. Retrieved August 25, 2026 from <https://www.markdownguide.org>
 
