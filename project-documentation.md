@@ -37,20 +37,12 @@ for more information about markdown syntax, see https://www.markdownguide.org
 
 ## Participants
 
-<!--
-List your research participants here as a bullet list, one participant per line, in exactly this format (uid, then first name, then last name):
+Participants
 
-- u1234567 Firstname Lastname
-
-Rules (these are checked automatically by CI, and cross-checked against every other submission in the class):
-
-1. 3 to 5 participants
-2. every participant must be a current COMP3900/6390 student
-3. use each participant's real ANU uid and name (ask them to write it down for you as part of your consent process)
-4. don't list yourself, and don't list anyone twice
-
-Listing people who did not actually participate in your study is fabrication of research data, which comes under the N category in the marking rubric and can be a breach of academic integrity.
--->
+u7861824 Ruojin Li
+u8207906 Qifeng He
+u8168849 Fan Yang
+u8210662 Jie Ren
 
 ## Acknowledgements
 
