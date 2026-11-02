@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly Kitchen Plan</title>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --card: #ffffff;
+    --ink: #22301f;
+    --muted: #6b7566;
+    --accent: #3f7d4e;
+    --accent-soft: #e3efe4;
+    --line: #e4e0d6;
+    --radius: 9px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.45;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  .app {
+    width: 100%;
+    max-width: 480px;
+    padding: 24px 16px 40px;
+  }
+  .screen { display: none; animation: fade .25s ease; }
+  .screen.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .brand { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 28px; margin: 8px 0 8px; line-height: 1.2; }
+  h2 { font-size: 20px; margin: 0 0 12px; }
+  p.lead { color: var(--muted); margin: 0 0 24px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .note {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: var(--accent-soft); border-radius: 6px; padding: 12px 14px;
+    font-size: 14px; color: #2d5a38;
+  }
+
+  .btn {
+    display: block; width: 100%;
+    border: none; border-radius: 7px;
+    padding: 16px; font-size: 17px; font-weight: 600;
+    cursor: pointer; transition: transform .05s ease, opacity .15s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); margin-top: 10px; }
+
+  /* Scale illustration */
+  .scale {
+    width: 180px; height: 180px; margin: 8px auto 24px;
+    border-radius: 18px; background: #fff; border: 2px solid var(--line);
+    display: grid; place-items: center; position: relative;
+  }
+  .scale::after {
+    content: ""; position: absolute; inset: 22px; border-radius: 11px;
+    border: 2px dashed #c9d8cb;
+  }
+  .feet { font-size: 48px; z-index: 1; }
+
+  .pulse { animation: pulse 1.1s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(63,125,78,.35); } 50% { box-shadow: 0 0 0 18px rgba(63,125,78,0); } }
+
+  .progress { height: 8px; background: var(--line); border-radius: 50px; overflow: hidden; margin: 8px 0 12px; }
+  .progress > div { height: 100%; width: 0; background: var(--accent); transition: width .2s linear; }
+  .center { text-align: center; }
+  .muted { color: var(--muted); font-size: 14px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 6px; background: #ebe7dd; padding: 4px; border-radius: 6px; margin-bottom: 16px; }
+  .tab {
+    flex: 1; border: none; background: transparent; padding: 10px 6px; border-radius: 4px;
+    font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer;
+  }
+  .tab.active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Shopping list */
+  .group-title { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 6px 0 6px; }
+  .item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--line);
+  }
+  .item:last-child { border-bottom: none; }
+  .item input { width: 20px; height: 20px; accent-color: var(--accent); flex: none; }
+  .item .name { flex: 1; }
+  .item .qty { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .item.done .name, .item.done .qty { text-decoration: line-through; color: var(--muted); }
+
+  /* Days / recipes */
+  .days { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 12px; }
+  .day {
+    flex: none; border: 1px solid var(--line); background: #fff; border-radius: 5px;
+    padding: 8px 12px; font-weight: 600; font-size: 14px; cursor: pointer; color: var(--muted);
+  }
+  .day.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .meal { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .meal:last-child { border-bottom: none; }
+  .meal .ico { width: 48px; height: 48px; border-radius: 6px; background: var(--accent-soft); display: grid; place-items: center; font-size: 24px; flex: none; }
+  .meal .label { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .meal .title { font-weight: 600; }
+  .meal .sub { font-size: 13px; color: var(--muted); }
+
+  /* Recipe detail */
+  .back { background: none; border: none; color: var(--accent); font-size: 16px; font-weight: 600; padding: 0; margin-bottom: 16px; cursor: pointer; }
+  .ph-img { height: 160px; border-radius: 7px; background: repeating-linear-gradient(45deg, #ece8de, #ece8de 10px, #f3f0e8 10px, #f3f0e8 20px); display: grid; place-items: center; color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  ol.steps { padding-left: 20px; margin: 0; }
+  ol.steps li { margin-bottom: 8px; }
+  ul.ing { padding-left: 20px; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+<main class="app">
+
+  <!-- 1. Home -->
+  <section class="screen active" id="s-home">
+    <div class="brand">Weekly Kitchen Plan</div>
+    <h1>Plan your week's meals in one step</h1>
+    <p class="lead">Step on the scale and get a weekly shopping list and recipes made for you.</p>
+    <div class="card">
+      <div class="note"><span>🔒</span><span>Your measurements are used only to create your plan. Weight and body-fat numbers are never shown.</span></div>
+    </div>
+    <button class="btn btn-primary" data-go="s-confirm">Start my plan</button>
+  </section>
+
+  <!-- 2. Confirm weighing -->
+  <section class="screen" id="s-confirm">
+    <h2>Ready to measure</h2>
+    <div class="scale"><span class="feet">👣</span></div>
+    <p class="center">Please step onto the scale barefoot and stand still.</p>
+    <p class="center muted">Press the button when you are on the scale.</p>
+    <button class="btn btn-primary" id="btn-measure">I'm on the scale — start</button>
+    <button class="btn btn-ghost" data-go="s-home">Cancel</button>
+  </section>
+
+  <!-- 3. Measuring -->
+  <section class="screen" id="s-measuring">
+    <h2 class="center">Measuring…</h2>
+    <div class="scale pulse"><span class="feet">👣</span></div>
+    <div class="progress"><div id="bar"></div></div>
+    <p class="center muted" id="measure-msg">Please keep still</p>
+  </section>
+
+  <!-- 4. Done -->
+  <section class="screen" id="s-done">
+    <div class="scale"><span class="feet">✅</span></div>
+    <h2 class="center">Your plan is ready</h2>
+    <p class="center muted">You can step off the scale now.</p>
+    <button class="btn btn-primary" data-go="s-plan">See my weekly plan</button>
+  </section>
+
+  <!-- 5. Plan -->
+  <section class="screen" id="s-plan">
+    <div class="brand">This week</div>
+    <h1 style="font-size:24px">Your weekly plan</h1>
+    <div class="tabs">
+      <button class="tab active" data-tab="p-shop">🛒 Shopping list</button>
+      <button class="tab" data-tab="p-recipes">🍳 Recipes</button>
+    </div>
+
+    <div class="panel active" id="p-shop">
+      <div class="card" id="shop-list"></div>
+      <p class="muted center">Tick items as you shop.</p>
+    </div>
+
+    <div class="panel" id="p-recipes">
+      <div class="days" id="days"></div>
+      <div class="card" id="meals"></div>
+    </div>
+
+    <button class="btn btn-ghost" id="btn-restart">Start again</button>
+  </section>
+
+  <!-- 6. Recipe detail -->
+  <section class="screen" id="s-recipe">
+    <button class="back" data-go="s-plan">← Back to plan</button>
+    <div class="ph-img">[ Recipe photo placeholder ]</div>
+    <div class="muted" id="r-meta"></div>
+    <h2 id="r-title"></h2>
+    <div class="card">
+      <div class="group-title">Ingredients</div>
+      <ul class="ing" id="r-ing"></ul>
+    </div>
+    <div class="card">
+      <div class="group-title">Steps</div>
+      <ol class="steps">
+        <li>[Placeholder] Prepare the ingredients.</li>
+        <li>[Placeholder] Cook following the recipe.</li>
+        <li>[Placeholder] Serve.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ---- Fixed demo data (same for every participant) ----
+  const SHOPPING = [
+    { group: 'Protein', items: [
+      ['Chicken breast', '700 g'], ['Eggs', '10'], ['Firm tofu', '600 g'], ['Salmon fillet', '300 g'] ] },
+    { group: 'Grains', items: [
+      ['Brown rice', '1.2 kg'], ['Rolled oats', '400 g'], ['Wholemeal bread', '1 loaf'] ] },
+    { group: 'Vegetables & fruit', items: [
+      ['Broccoli', '800 g'], ['Spinach', '500 g'], ['Tomatoes', '600 g'], ['Carrots', '500 g'], ['Bananas', '7'] ] },
+    { group: 'Dairy & other', items: [
+      ['Greek yoghurt', '1 kg'], ['Milk', '2 L'], ['Olive oil', '100 ml'] ] }
+  ];
+
+  const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const MEALS = [
+    { key: 'Breakfast', ico: '🥣' },
+    { key: 'Lunch',     ico: '🥗' },
+    { key: 'Dinner',    ico: '🍲' }
+  ];
+  // Placeholder recipe names: "Recipe A1" etc.
+  const recipeName = (d, m) => `Recipe ${String.fromCharCode(65 + m)}${d + 1} (placeholder)`;
+
+  // ---- Navigation ----
+  function go(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+
+  // ---- Simulated measuring ----
+  document.getElementById('btn-measure').addEventListener('click', () => {
+    go('s-measuring');
+    const bar = document.getElementById('bar');
+    const msg = document.getElementById('measure-msg');
+    let p = 0;
+    bar.style.width = '0%';
+    const t = setInterval(() => {
+      p += 4;
+      bar.style.width = p + '%';
+      if (p > 40) msg.textContent = 'Analysing…';
+      if (p > 75) msg.textContent = 'Creating your weekly plan…';
+      if (p >= 100) { clearInterval(t); msg.textContent = 'Please keep still'; setTimeout(() => go('s-done'), 300); }
+    }, 120);
+  });
+
+  // ---- Shopping list ----
+  const shop = document.getElementById('shop-list');
+  SHOPPING.forEach(g => {
+    const t = document.createElement('div');
+    t.className = 'group-title'; t.textContent = g.group;
+    shop.appendChild(t);
+    g.items.forEach(([name, qty]) => {
+      const row = document.createElement('label');
+      row.className = 'item';
+      row.innerHTML = `<input type="checkbox"><span class="name">${name}</span><span class="qty">${qty}</span>`;
+      row.querySelector('input').addEventListener('change', e => row.classList.toggle('done', e.target.checked));
+      shop.appendChild(row);
+    });
+  });
+
+  // ---- Tabs ----
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === tab));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === tab.dataset.tab));
+  }));
+
+  // ---- Recipes by day ----
+  const daysEl = document.getElementById('days');
+  const mealsEl = document.getElementById('meals');
+  let currentDay = 0;
+  function renderDay(d) {
+    currentDay = d;
+    daysEl.querySelectorAll('.day').forEach((b, i) => b.classList.toggle('active', i === d));
+    mealsEl.innerHTML = '';
+    MEALS.forEach((m, mi) => {
+      const row = document.createElement('div');
+      row.className = 'meal';
+      row.innerHTML = `<div class="ico">${m.ico}</div>
+        <div><div class="label">${m.key}</div><div class="title">${recipeName(d, mi)}</div>
+        <div class="sub">~20 min · tap for details</div></div>`;
+      row.addEventListener('click', () => openRecipe(d, mi));
+      mealsEl.appendChild(row);
+    });
+  }
+  DAYS.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.className = 'day'; b.textContent = name;
+    b.addEventListener('click', () => renderDay(i));
+    daysEl.appendChild(b);
+  });
+  renderDay(0);
+
+  function openRecipe(d, mi) {
+    document.getElementById('r-meta').textContent = `${DAYS[d]} · ${MEALS[mi].key}`;
+    document.getElementById('r-title').textContent = recipeName(d, mi);
+    const ing = document.getElementById('r-ing');
+    ing.innerHTML = '';
+    ['[Ingredient 1] — 100 g', '[Ingredient 2] — 80 g', '[Ingredient 3] — 50 g'].forEach(x => {
+      const li = document.createElement('li'); li.textContent = x; ing.appendChild(li);
+    });
+    go('s-recipe');
+  }
+
+  // ---- Restart (for the next participant) ----
+  document.getElementById('btn-restart').addEventListener('click', () => {
+    shop.querySelectorAll('input').forEach(i => { i.checked = false; i.closest('.item').classList.remove('done'); });
+    document.querySelector('.tab[data-tab="p-shop"]').click();
+    renderDay(0);
+    go('s-home');
+  });
+</script>
+</body>
+</html>
