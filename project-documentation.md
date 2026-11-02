@@ -86,14 +86,7 @@ Fill after the study:
 
 ## Positionality Statement (COMP6390 only)
 
-<!--
-Must also appear in the video. Base it on your in-class draft, rewritten in your own words:
-- you are managing your own diet → user's perspective, may expect others to value the same things
-- decision: suggestions instead of body numbers; simulated data instead of a real scale reading
-- consequence: can assess perceived usability, NOT sensing accuracy or long-term behaviour change
-- recruiting COMP6390 classmates → shared background, may give favourable ratings
-- what you will do about it: report critical feedback explicitly, separate your interpretation from data
--->
+I am managing my own diet, thus I designed this system from a user's perspective, and my own discomfort with seeing weight and body-fat numbers led me to hide them and show only ingredient quantities and recipes. This means my study can explore whether a no-numbers design feels comfortable and useful, but it also builds my own value into the product: some people are motivated by numbers, and my design may not suit them. Because I cook for myself, I assumed that users have a kitchen and time to cook, so the plan is built around weekly shopping and home cooking; the study cannot tell me how the system would work for students who mostly eat out or live without cooking facilities. Because my background is in supply chain planning and demand forecasting, I framed healthy eating as a planning problem, turning body data into weekly quantities to buy, and chose questionnaire items about planning support rather than emotions or habits. Finally, my participants are classmates who also took part in my earlier study, and I operated the simulated prototype myself, so they may have rated it more favourably than other users would.
 
 ## Participants
 
