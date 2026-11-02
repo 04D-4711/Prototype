@@ -1,7 +1,7 @@
 ---
 website: https://smcclab.github.io/thirty-nine-hundred-hci/assessments/03-prototype-and-evaluation.html
 title: Final Project Documentation
-author: PUT_YOUR_UID_HERE
+author: u8276091
 ---
 
 <!--
