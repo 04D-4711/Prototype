@@ -4,12 +4,16 @@ title: Final Project Documentation
 author: u8276091
 ---
 
+<!--
+TODO before submission: delete ALL comments in this file (the template asks for it).
+Word budget (max 1980 total): RQ ~550 · Prototype ~400 · Findings ~650 · Positionality ~200
+-->
 
 ## Research Question, Plan, and Conclusions
 
 ### Why this system
 
-Many who try to manage their weight rely on scales and tracking apps that put numbers at the centre: weight, body-fat percentage, calories. From my own experience of managing my diet, seeing these numbers often made me anxious instead of helping me decide what to eat. Research supports this concern. Frequent self-weighing has been associated with poorer psychological well-being in young women [4], food journaling apps create logging burden and "negative nudges" that discourage continued use [3], and weight-loss apps that foreground numbers can reinforce harmful behaviour in vulnerable users [5]. What students need is less self-scrutiny and more help turning their goals into concrete actions: what to buy and what to cook this week.
+Many students who try to manage their weight rely on scales and tracking apps that put numbers at the centre: weight, body-fat percentage, calories. From my own experience of managing my diet, seeing these numbers often made me anxious instead of helping me decide what to eat. Research supports this concern. Frequent self-weighing has been associated with poorer psychological well-being in young women [4], food journaling apps create logging burden and "negative nudges" that discourage continued use [3], and weight-loss apps that foreground numbers can reinforce harmful behaviour in vulnerable users [5]. What students need is less self-scrutiny and more help turning their goals into concrete actions: what to buy and what to cook this week.
 
 This project addresses UN Sustainable Development Goal 3, target 3.4, which aims to prevent non-communicable diseases and to promote mental health and well-being [6]. My prototype pairs a body-fat scale with a companion app. The scale's measurements are used only in the background; the user sees a weekly shopping list with ingredient quantities and a set of recipes, never their weight or body-fat numbers.
 
@@ -17,7 +21,7 @@ This project addresses UN Sustainable Development Goal 3, target 3.4, which aims
 
 How usable is a body-fat scale and companion app that turns body measurements into weekly ingredient quantities and recipes, without displaying weight or body-fat numbers, and how well does it support students' meal planning?
 
-### Study plan
+### Research plan
 
 I ran an in-person evaluation with four COMP3900/6390 classmates. Each participant completed one task: start a plan, step on the scale, then use the app to review the weekly shopping list and browse the recipes. The prototype used simulated body data, so no participant's real weight or body fat was measured, displayed or stored. This was a deliberate ethical choice, to avoid causing the anxiety the system is designed to reduce.
 
@@ -86,7 +90,9 @@ Fill after the study:
 
 ## Positionality Statement (COMP6390 only)
 
-I am managing my own diet, thus I designed this system from a user's perspective, and my own discomfort with seeing weight and body-fat numbers led me to hide them and show only ingredient quantities and recipes. This means my study can explore whether a no-numbers design feels comfortable and useful, but it also builds my own value into the product: some people are motivated by numbers, and my design may not suit them. Because I cook for myself, I assumed that users have a kitchen and time to cook, so the plan is built around weekly shopping and home cooking; the study cannot tell me how the system would work for students who mostly eat out or live without cooking facilities. Because my background is in supply chain planning and demand forecasting, I framed healthy eating as a planning problem, turning body data into weekly quantities to buy, and chose questionnaire items about planning support rather than emotions or habits. Finally, my participants are classmates who also took part in my earlier study, and I operated the simulated prototype myself, so they may have rated it more favourably than other users would.
+Because I am managing my own diet, I designed this system from a user's perspective, and my own discomfort with seeing weight and body-fat numbers led me to hide them and show only ingredient quantities and recipes. This means my study can explore whether a no-numbers design feels comfortable and useful, but it also builds my own value into the product: some people are motivated by numbers, and my design may not suit them. Because I cook for myself, I assumed that users have a kitchen and time to cook, so the plan is built around weekly shopping and home cooking; the study cannot tell me how the system would work for students who mostly eat out or live without cooking facilities. Because my background is in supply chain planning and demand forecasting, I framed healthy eating as a planning problem, turning body data into weekly quantities to buy, and chose questionnaire items about planning support rather than emotions or habits. Finally, my participants are classmates who also took part in my earlier study, and I operated the simulated prototype myself, so they may have rated it more favourably than other users would.
+
+<!-- TODO after the study: add 1-2 sentences about a concrete moment where your position shaped how you read the data, e.g., a participant who wanted to see the numbers, or a C1/C2 result that went against your expectation, and how you handled it. -->
 
 ## Participants
 
