@@ -40,8 +40,11 @@ for more information about markdown syntax, see https://www.markdownguide.org
 Participants
 
 u7861824 Ruojin Li
+
 u8207906 Qifeng He
+
 u8168849 Fan Yang
+
 u8210662 Jie Ren
 
 ## Acknowledgements
