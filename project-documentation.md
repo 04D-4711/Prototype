@@ -41,7 +41,7 @@ Participants gave consent on the first page of the form. Names and uids were col
 
 ### Conclusions
 
-<!-- TODO: write after analysis (2-3 sentences answering the RQ). -->
+The prototype was highly usable (mean SUS 86.25), and hiding weight and body-fat numbers made every participant comfortable. Its support for meal planning was mixed: the automatic shopping list was valued, but a fixed plan that cannot be personalised limited whether participants could turn it into real shopping and cooking. Hiding numbers also did not build trust on its own. The next iteration should let users swap ingredients and set preferences, and explain each plan with meal-level nutrition information instead of body numbers. These findings come from four classmates in a single short session with a fixed plan, so they show perceived usability and acceptance, not long-term changes in eating behaviour.
 
 ## Prototype Design and Features
 
@@ -78,21 +78,73 @@ The prototype works in a Wizard-of-Oz style: scale readings are simulated, every
 
 ## Research Data, Analysis and Findings
 
-<!--
-Fill after the study:
-- SUS: per-participant scores table + mean; compare with 68 benchmark [2]
-- P1–P3, C1–C2: medians/ranges table or a small plot (materials/likert.png)
-- Open answers: 2–3 themes with short quotes (P1, P2...)
-- Observations: hesitations, questions asked, where people got stuck
-- Link every finding back to the RQ (usability + planning support + no-numbers design)
-- Data files: materials/survey_responses.csv (names/uids removed), materials/analysis.py
--->
+Four participants (P0-P3) completed the task and the questionnaire. Raw responses are in `materials/survey_responses.csv`, and all numbers below are produced by `materials/analysis.py`. To avoid confusion with participant codes, questionnaire items are always written as "item P1", "item C2", and so on.
+
+### Usability: SUS
+
+| Participant | P0 | P1 | P2 | P3 | Mean |
+| --- | --- | --- | --- | --- | --- |
+| SUS score | 90 | 80 | 87.5 | 87.5 | 86.25 |
+
+![SUS score per participant](materials/sus_scores.png)
+
+All four scores were well above the commonly cited average of 68 [2], and no participant agreed that they would need technical support or had to learn a lot before using the system (items SUS4 and SUS10 were all rated 1). The flow from "Start my plan" to the weekly plan was easy to follow. This result should be read with care: the task was short, the prototype has few screens, and participants were friendly classmates.
+
+### Planning support: items P1-P3
+
+![Custom items: each dot is one participant, bar = median](materials/likert_items.png)
+
+| Item | Median | Responses (P0, P1, P2, P3) |
+| --- | --- | --- |
+| P1 quantities help decide what to buy | 3.5 | 4, 3, 4, 3 |
+| P2 plan can be turned into shopping and cooking | 3 | 4, 2, 4, 2 |
+| P3 recipes fit everyday eating habits | 3 | 4, 2, 4, 2 |
+| C1 comfortable without seeing body numbers | 4 | 4, 4, 4, 4 |
+| C2 trusted recommendations without body data | 3 | 3, 3, 4, 3 |
+
+Planning support was clearly weaker than usability. Items P2 and P3 split the group: P0 and P2 agreed (4), while P1 and P3 disagreed (2). The open answers explain this split. The shopping list was the most valued feature:
+
+> "The automatic shopping list, because it saves me a lot of time." (P2)
+>
+> "I don't need to think what I should eat today." (P0)
+
+However, every participant named a lack of personalisation as the least helpful part:
+
+> "Not really fit personal preference :)" (P3)
+>
+> "It doesn't let me swap out ingredients I don't like or customize the meals." (P2)
+
+The two participants who disagreed with items P2 and P3 were the two whose comments focused only on this problem. Part of this result comes from the prototype's fidelity, since everyone received the same fixed plan and placeholder recipes, but it also shows that a plan users cannot adjust is hard to turn into real shopping and cooking.
+
+### The no-numbers design: items C1 and C2
+
+All four participants agreed that they felt comfortable without seeing their weight or body-fat numbers (item C1 = 4 for everyone). Three participants described this positively ("It was refreshing and reduced my tracking anxiety", P1; "Good, I don't want to know", P3). P0 was the exception: hiding the numbers did "not have big influence on me, because I have my own body data recorded on Apple Health and check every day."
+
+Trust was lower than comfort. Three of four participants were neutral on item C2, so hiding body data made the system comfortable but did not by itself make the recommendations convincing. P0's suggestion points to a possible solution: "show percentage of different kinds of nutrition in each meal". This would explain why a plan was recommended without showing the user's body numbers.
+
+### Themes from open answers
+
+| Theme | Participants |
+| --- | --- |
+| The automatic shopping list removes daily decisions and saves time | P0, P1, P2 |
+| Plans and recipes cannot be personalised or substituted | P0, P1, P2, P3 |
+| Not seeing numbers feels private or relieving | P1, P2, P3 |
+| Users who already track their body data are indifferent to hiding it | P0 |
+| Users want to know why a plan is recommended (nutrition information) | P0 |
+
+<!-- TODO: add 2-3 sentences from YOUR observation notes (hesitations, questions participants asked, where they tapped first), and the photo of a participant using the prototype. Only write what you actually observed. -->
 
 ## Positionality Statement (COMP6390 only)
 
 Because I am managing my own diet, I designed this system from a user's perspective, and my own discomfort with seeing weight and body-fat numbers led me to hide them and show only ingredient quantities and recipes. This means my study can explore whether a no-numbers design feels comfortable and useful, but it also builds my own value into the product: some people are motivated by numbers, and my design may not suit them. Because I cook for myself, I assumed that users have a kitchen and time to cook, so the plan is built around weekly shopping and home cooking; the study cannot tell me how the system would work for students who mostly eat out or live without cooking facilities. Because my background is in supply chain planning and demand forecasting, I framed healthy eating as a planning problem, turning body data into weekly quantities to buy, and chose questionnaire items about planning support rather than emotions or habits. Finally, my participants are classmates who also took part in my earlier study, and I operated the simulated prototype myself, so they may have rated it more favourably than other users would.
 
-<!-- TODO after the study: add 1-2 sentences about a concrete moment where your position shaped how you read the data, e.g., a participant who wanted to see the numbers, or a C1/C2 result that went against your expectation, and how you handled it. -->
+<!-- TODO: add 1-2 sentences in YOUR words about how your position shaped how you read the data. Candidate moments from your actual data:
+- C1 = 4 for everyone looked like confirmation of your design, but P0 said hiding numbers made no difference because they check Apple Health every day; your discomfort with numbers is not shared by everyone.
+- C2 was neutral for 3/4: comfort did not equal trust, which goes against your expectation that hiding numbers would simply be better.
+- Every participant asked for personalisation: as someone who cooks for yourself, you designed one fixed plan around your own way of shopping and cooking.
+Write what YOU actually thought when you saw these results, and what you did about it (e.g., reported P0's view and the C2 result instead of treating them as noise). -->
+
+
 
 ## Participants
 
@@ -110,6 +162,8 @@ Because I am managing my own diet, I designed this system from a user's perspect
 - Questionnaire: Claude drafted the wording of the custom items P1–P3 and C1–C2 and wrote the Google Apps Script `materials/create_survey_form.gs` that builds the Google Form; I specified the constructs, edited the items, and checked the form. SUS items are the standard scale [1].
 - Prototype: Claude wrote the HTML/CSS/JavaScript of `Prototype.html` from my description of the interaction flow; I specified the flow and the no-numbers design, tested it, and deployed it on GitHub Pages.
 - References: Claude suggested candidate references and checked their details; I read and verified each source.
+- Report text: Claude drafted the text of the sections "Research Question, Plan, and Conclusions", "Prototype Design and Features", "Research Data, Analysis and Findings" and "Positionality Statement" from my decisions, my data and our discussion; I ...
+- Analysis: Claude wrote `materials/analysis.py` (SUS scoring, Likert summaries and the two figures) and suggested the themes from the open answers; I checked the scores against the raw CSV in `materials/survey_responses.csv` and ...
 
 ## References
 
