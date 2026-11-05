@@ -4,10 +4,6 @@ title: Final Project Documentation
 author: u8276091
 ---
 
-<!--
-TODO before submission: delete ALL comments in this file (the template asks for it).
-Word budget (max 1980 total): RQ ~550 · Prototype ~400 · Findings ~650 · Positionality ~200
--->
 
 ## Research Question, Plan, and Conclusions
 
