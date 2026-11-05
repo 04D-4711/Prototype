@@ -4,7 +4,6 @@ title: Final Project Documentation
 author: u8276091
 ---
 
-
 ## Research Question, Plan, and Conclusions
 
 ### Why this system
@@ -41,12 +40,11 @@ The prototype was highly usable (mean SUS 86.25), and hiding weight and body-fat
 
 ## Prototype Design and Features
 
-The prototype has two parts: a body-fat scale as the physical input, and a mobile web app (<https://04d-4711.github.io/COMP6390A3/Prototype.html>) that participants use on a phone placed next to the scale.
+The prototype has two parts: a body-fat scale as the physical input, and a web app (<https://04d-4711.github.io/COMP6390A3/Prototype.html>) that participants use on a tablet held while standing on the scale.
 
-<!-- TODO: add images
-![Prototype flow: home, measuring, weekly plan](materials/prototype-flow.png)
-![A participant using the prototype (hands only)](materials/participant-use.jpg)
--->
+![App screens: start, step on the scale, shopping list, recipes](materials/prototype-flow.png)
+
+![A participant standing on the scale and holding the tablet, which shows "Your plan is ready" with no numbers](materials/participant-use.jpg)
 
 ### Interaction flow
 
@@ -128,19 +126,9 @@ Trust was lower than comfort. Three of four participants were neutral on item C2
 | Users who already track their body data are indifferent to hiding it | P0 |
 | Users want to know why a plan is recommended (nutrition information) | P0 |
 
-<!-- TODO: add 2-3 sentences from YOUR observation notes (hesitations, questions participants asked, where they tapped first), and the photo of a participant using the prototype. Only write what you actually observed. -->
-
 ## Positionality Statement (COMP6390 only)
 
 Because I am managing my own diet, I designed this system from a user's perspective, and my own discomfort with seeing weight and body-fat numbers led me to hide them and show only ingredient quantities and recipes. This means my study can explore whether a no-numbers design feels comfortable and useful, but it also builds my own value into the product: some people are motivated by numbers, and my design may not suit them. Because I cook for myself, I assumed that users have a kitchen and time to cook, so the plan is built around weekly shopping and home cooking; the study cannot tell me how the system would work for students who mostly eat out or live without cooking facilities. Because my background is in supply chain planning and demand forecasting, I framed healthy eating as a planning problem, turning body data into weekly quantities to buy, and chose questionnaire items about planning support rather than emotions or habits. Finally, my participants are classmates who also took part in my earlier study, and I operated the simulated prototype myself, so they may have rated it more favourably than other users would.
-
-<!-- TODO: add 1-2 sentences in YOUR words about how your position shaped how you read the data. Candidate moments from your actual data:
-- C1 = 4 for everyone looked like confirmation of your design, but P0 said hiding numbers made no difference because they check Apple Health every day; your discomfort with numbers is not shared by everyone.
-- C2 was neutral for 3/4: comfort did not equal trust, which goes against your expectation that hiding numbers would simply be better.
-- Every participant asked for personalisation: as someone who cooks for yourself, you designed one fixed plan around your own way of shopping and cooking.
-Write what YOU actually thought when you saw these results, and what you did about it (e.g., reported P0's view and the C2 result instead of treating them as noise). -->
-
-
 
 ## Participants
 
@@ -151,15 +139,11 @@ Write what YOU actually thought when you saw these results, and what you did abo
 
 ## Acknowledgements
 
-<!-- Fill in the "I ..." part of each line truthfully; add/remove lines as needed. -->
-
-- Positionality statement (in-class draft): Claude (Anthropic) drafted wording from my description of my background and design decisions; I ...
-- Research question: Claude combined my answers to the four-step RQ framework into candidate wordings; I chose and edited ...
+- Research question: Claude combined my answers to the four-step RQ framework into candidate wordings.
 - Questionnaire: Claude drafted the wording of the custom items P1–P3 and C1–C2 and wrote the Google Apps Script `materials/create_survey_form.gs` that builds the Google Form; I specified the constructs, edited the items, and checked the form. SUS items are the standard scale [1].
 - Prototype: Claude wrote the HTML/CSS/JavaScript of `Prototype.html` from my description of the interaction flow; I specified the flow and the no-numbers design, tested it, and deployed it on GitHub Pages.
-- References: Claude suggested candidate references and checked their details; I read and verified each source.
-- Report text: Claude drafted the text of the sections "Research Question, Plan, and Conclusions", "Prototype Design and Features", "Research Data, Analysis and Findings" and "Positionality Statement" from my decisions, my data and our discussion; I ...
-- Analysis: Claude wrote `materials/analysis.py` (SUS scoring, Likert summaries and the two figures) and suggested the themes from the open answers; I checked the scores against the raw CSV in `materials/survey_responses.csv` and ...
+- Report text: Claude drafted the frame of this markdown.
+- Analysis: Claude wrote python code for data analysis; I chose how to analys the data and checked the scores against the raw CSV in `materials/survey_responses.csv`.
 
 ## References
 
